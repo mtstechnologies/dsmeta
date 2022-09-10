@@ -1,5 +1,7 @@
 package br.com.mts.dsmeta.services;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +26,11 @@ public class SaleService {
 		//return repository.findAll();
 	//}para não retornar todos, irei criar uma paginação abaixo
 	
-	public Page<Sale> findSales(Pageable pageable){
-		return repository.findAll(pageable);
+	public Page<Sale> findSales(String minDate, String maxDate, Pageable pageable){
+		//abaixo estou convertendo o conteudo minData, que esta vindo em forma de texto(String), para formato data
+		LocalDate min = LocalDate.parse(minDate);
+		LocalDate max = LocalDate.parse(maxDate);
+		
+		return repository.findSales(min, max, pageable);
 	}
 }
