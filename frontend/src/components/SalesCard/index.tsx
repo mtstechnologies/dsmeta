@@ -21,10 +21,13 @@ function SalesCard() {
 
   /**é aqui que a magina acontece, buscando dados no backend */
   useEffect(() => {
-    axios.get(`${BASE_URL}/sales`).then((response) => {
+
+    const dmin = minDate.toISOString().slice(0, 10); /**formatando a data, aaaa-mm-dd, e usando slice para desprezar o restante dos dados  */
+    const dmax = maxDate.toISOString().slice(0, 10);
+    axios.get(`${BASE_URL}/sales?minDate=${dmin}&maxDate=${dmax}`).then((response) => {
       setSales(response.data.content);
     });
-  }, []);
+  }, [minDate, maxDate]); /**aqui dentro estou dizendo para meu useEffect rodar novamente caso aja mudanca no dados */
   /**o bloco acima para buscar os dados no backend */
 
   return (
